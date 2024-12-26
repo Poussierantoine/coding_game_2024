@@ -1,0 +1,107 @@
+import {TurnInfo} from "../domain/TurnInfo";
+import {Direction, GameGateway, GetTurnInfo, ITurnInfo, OrganType, ProteinType} from "../interfaces";
+import {Cell} from "../domain/Cell";
+import {Organ} from "../domain/Organ";
+import {Position} from "../domain/Position";
+import {Action} from "../domain/Action";
+
+export class ProductionGameGateway implements GameGateway {
+    getInitialization = () => {
+        // @ts-ignore
+        var gridSize: string[] = readline().split(' ');
+        const width: number = parseInt(gridSize[0]); // columns in the game grid
+        const height: number = parseInt(gridSize[1]); // rows in the game grid
+        return { width, height }
+    }
+
+    print(stringToPrint: string) {
+        console.error(stringToPrint)
+    }
+
+    doAction(action: Action){
+        console.log(action.toString())
+    }
+
+     getTurnInfo: GetTurnInfo =  ({width, height}) => {
+        const turnInfo: ITurnInfo = {
+            grid: [],
+            myProteins: { A: 0 , B: 0, C: 0, D: 0 },
+            oppProteins: { A: 0 , B: 0, C: 0, D: 0 },
+            myOrgans: [],
+            oppOrgans: [],
+            organMap: new Map()
+        }
+
+        for (let y = 0; y < height; ++y) {
+            turnInfo.grid.push(new Array(width))
+            for (let x = 0; x < width; ++x) {
+                turnInfo.grid[y][x] = new Cell({
+                    position: new Position( x, y ),
+                    isWall: false,
+                })
+            }
+        }
+
+        // @ts-ignore
+        const entityCount: number = parseInt(readline());
+        for (let i = 0; i < entityCount; i++) {
+            // @ts-ignore
+            const entityInformations: string[] = readline().split(' ');
+            const x: number = parseInt(entityInformations[0]);
+            const y: number = parseInt(entityInformations[1]); // grid coordinate
+            const type: string = entityInformations[2]; // WALL, ROOT, BASIC, TENTACLE, HARVESTER, SPORER, A, B, C, D
+            const owner: number = parseInt(entityInformations[3]); // 1 if your organ, 0 if enemy organ, -1 if neither
+            const organId: number = parseInt(entityInformations[4]); // id of this entity if it's an organ, 0 otherwise
+            const organDir: string = entityInformations[5]; // N,E,S,W or X if not an organ
+            const organParentId: number = parseInt(entityInformations[6]);
+            const organRootId: number = parseInt(entityInformations[7]);
+
+            if (type === 'WALL') {
+                turnInfo.grid[y][x].setIsWall(true)
+            } else if (type === 'A' || type === 'B' || type === 'C' || type === 'D') {
+                turnInfo.grid[y][x].setProtein( type as ProteinType)
+            } else {
+                const organ = new Organ({
+                    id: organId,
+                    position: new Position( x, y ),
+                    type: type as OrganType,
+                    direction: organDir as Direction,
+                    parentId: organParentId,
+                    rootId: organRootId,
+                    owner: owner as 0 | 1
+                })
+                turnInfo.grid[y][x].setOrgan(organ)
+                turnInfo.organMap.set(organId, organ)
+                if (owner === 1) {
+                    turnInfo.myOrgans.push(organ)
+                } else {
+                    turnInfo.oppOrgans.push(organ)
+                }
+            }
+        }
+
+        // @ts-ignore
+        var playerVitamins: string[] = readline().split(' ');
+        const myA: number = parseInt(playerVitamins[0]);
+        const myB: number = parseInt(playerVitamins[1]);
+        const myC: number = parseInt(playerVitamins[2]);
+        const myD: number = parseInt(playerVitamins[3]); // your protein stock
+        turnInfo.myProteins = { A: myA, B: myB, C: myC, D: myD }
+        // @ts-ignore
+        var opponentVitamins: string[] = readline().split(' ');
+        const oppA: number = parseInt(opponentVitamins[0]);
+        const oppB: number = parseInt(opponentVitamins[1]);
+        const oppC: number = parseInt(opponentVitamins[2]);
+        const oppD: number = parseInt(opponentVitamins[3]); // opponent's protein stock
+        turnInfo.oppProteins = { A: oppA, B: oppB, C: oppC, D: oppD }
+
+        const requiredActionsCount = this.getRequiredActionsCount()
+
+        return new TurnInfo(turnInfo, {width, height}, requiredActionsCount);
+    }
+
+    private getRequiredActionsCount = () => {
+        // @ts-ignore
+        return parseInt(readline()); // your number of organisms, output an action for each one in any order
+    }
+}
