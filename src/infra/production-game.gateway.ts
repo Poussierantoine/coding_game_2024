@@ -1,9 +1,9 @@
 import {TurnInfo} from "../domain/TurnInfo";
 import {Direction, GameGateway, GetTurnInfo, ITurnInfo, OrganType, ProteinType} from "../interfaces";
-import {Cell} from "../domain/Cell";
 import {Organ} from "../domain/Organ";
 import {Position} from "../domain/Position";
 import {Action} from "../domain/Action";
+import {Grid} from "../domain/Grid";
 
 export class ProductionGameGateway implements GameGateway {
     getInitialization = () => {
@@ -22,24 +22,14 @@ export class ProductionGameGateway implements GameGateway {
         console.log(action.toString())
     }
 
-     getTurnInfo: GetTurnInfo =  ({width, height}) => {
+     getTurnInfo: GetTurnInfo =  (gridSize) => {
         const turnInfo: ITurnInfo = {
-            grid: [],
+            grid: new Grid(gridSize),
             myProteins: { A: 0 , B: 0, C: 0, D: 0 },
             oppProteins: { A: 0 , B: 0, C: 0, D: 0 },
             myOrgans: [],
             oppOrgans: [],
             organMap: new Map()
-        }
-
-        for (let y = 0; y < height; ++y) {
-            turnInfo.grid.push(new Array(width))
-            for (let x = 0; x < width; ++x) {
-                turnInfo.grid[y][x] = new Cell({
-                    position: new Position( x, y ),
-                    isWall: false,
-                })
-            }
         }
 
         // @ts-ignore
@@ -57,9 +47,9 @@ export class ProductionGameGateway implements GameGateway {
             const organRootId: number = parseInt(entityInformations[7]);
 
             if (type === 'WALL') {
-                turnInfo.grid[y][x].setIsWall(true)
+                turnInfo.grid.getCell(new Position(x,y)).setIsWall(true)
             } else if (type === 'A' || type === 'B' || type === 'C' || type === 'D') {
-                turnInfo.grid[y][x].setProtein( type as ProteinType)
+                turnInfo.grid.getCell(new Position(x,y)).setProtein( type as ProteinType)
             } else {
                 const organ = new Organ({
                     id: organId,
@@ -70,7 +60,7 @@ export class ProductionGameGateway implements GameGateway {
                     rootId: organRootId,
                     owner: owner as 0 | 1
                 })
-                turnInfo.grid[y][x].setOrgan(organ)
+                turnInfo.grid.getCell(new Position(x,y)).setOrgan(organ)
                 turnInfo.organMap.set(organId, organ)
                 if (owner === 1) {
                     turnInfo.myOrgans.push(organ)
@@ -97,7 +87,7 @@ export class ProductionGameGateway implements GameGateway {
 
         const requiredActionsCount = this.getRequiredActionsCount()
 
-        return new TurnInfo(turnInfo, {width, height}, requiredActionsCount);
+        return new TurnInfo(turnInfo, gridSize, requiredActionsCount);
     }
 
     private getRequiredActionsCount = () => {

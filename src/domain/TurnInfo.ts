@@ -1,9 +1,9 @@
 import {GridSize, ITurnInfo, ProteinType} from "../interfaces";
-import {Cell} from "./Cell";
 import {Organ} from "./Organ";
+import {Grid} from "./Grid";
 
 export class TurnInfo {
-     private readonly grid: Cell[][];
+     private readonly grid: Grid;
      private readonly myProteins: { [key in ProteinType]: number };
      private readonly oppProteins: { [key in ProteinType]: number };
      private readonly myOrgans: Organ[];
@@ -34,12 +34,7 @@ export class TurnInfo {
     }
 
     toString(){
-        const columns = []
-        for (const column of this.grid) {
-            const columnToString = column.map(cell => cell.toString()).join(' ')
-            columns.push(columnToString)
-        }
-        return columns.join('\n')
+        return this.grid.toString()
     }
 
 }

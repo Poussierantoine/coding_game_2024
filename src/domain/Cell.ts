@@ -4,7 +4,7 @@ import {Position} from "./Position";
 
 
 export class Cell {
-    private position: Position;
+    private _position: Position;
     private _organ?: Organ;
     private _protein?: ProteinType;
     private _isWall: boolean;
@@ -17,7 +17,7 @@ export class Cell {
             organ?: Organ
         }
     ) {
-        this.position = cell.position;
+        this._position = cell.position;
         this._isWall = cell.isWall;
         this._protein = cell.protein;
         this._organ = cell.organ;
@@ -25,10 +25,13 @@ export class Cell {
     }
 
 
+    get position(): Position {
+        return this._position;
+    }
+    
     get organ(): Organ | undefined {
         return this._organ;
     }
-
 
     get protein(): ProteinType | undefined{
         return this._protein;

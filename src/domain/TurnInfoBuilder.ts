@@ -1,10 +1,10 @@
-import {Cell} from "./Cell";
 import {Organ} from "./Organ";
 import {ProteinType} from "../interfaces";
 import {TurnInfo} from "./TurnInfo";
+import {Grid} from "./Grid";
 
 type TurnInfoBuilderProps = {
-    grid: Cell[][]
+    grid: Grid
     myProteins: { [key in ProteinType]: number }
     oppProteins: { [key in ProteinType]: number }
     myOrgans: Organ[]
@@ -18,7 +18,7 @@ export class TurnInfoBuilder {
 
     constructor(props: Partial<TurnInfoBuilderProps>) {
         this.props = {
-            grid: props.grid ?? [],
+            grid: props.grid ?? new Grid({width:0, height:0}),
             myProteins: props.myProteins ?? { A: 0 , B: 0, C: 0, D: 0 },
             oppProteins: props.oppProteins ?? { A: 0 , B: 0, C: 0, D: 0 },
             myOrgans: props.myOrgans ?? [],
@@ -29,7 +29,7 @@ export class TurnInfoBuilder {
     }
 
     build() {
-        return new TurnInfo(this.props, {width: this.props.grid.length, height: this.props.grid[0]?.length ?? 0}, this.props.requiredActionCount)
+        return new TurnInfo(this.props, {width: this.props.grid.width, height: this.props.grid.height}, this.props.requiredActionCount)
     }
 }
 

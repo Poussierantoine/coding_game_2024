@@ -3,6 +3,7 @@ import {OrganBuilder} from "./Organ.builder";
 import {TurnInfo} from "./TurnInfo";
 import {TurnInfoBuilder} from "./TurnInfoBuilder";
 import {Position} from "./Position";
+import {Grid} from "./Grid";
 
 describe('TurnInfo', () => {
     describe('toString', () => {
@@ -14,7 +15,9 @@ describe('TurnInfo', () => {
             const opponentOrgan = new OrganBuilder({owner: 1, position: new Position(1,1)}).build()
             const cell11= new CellBuilder({position: new Position(1,1), isWall: false, organ: opponentOrgan}).build()
 
-            const game = new TurnInfoBuilder({grid: [[cell00, cell01], [cell10, cell11]]}).build()
+            const grid = new Grid({width:2,height:2})
+            grid.setCells(...[cell00, cell01, cell10, cell11])
+            const game = new TurnInfoBuilder({grid}).build()
 
             expect(game.toString()).toEqual(
                 `(W) (P)\n( ) (O)`
