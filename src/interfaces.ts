@@ -1,7 +1,7 @@
 import {TurnInfo} from "./domain/TurnInfo";
 import {Organ} from "./domain/Organ";
-import {Cell} from "./domain/Cell";
 import {Action} from "./domain/Action";
+import {Grid} from "./domain/Grid";
 
 export type OrganType = 'ROOT' | 'BASIC'
 
@@ -12,7 +12,7 @@ export type Direction = 'N' | 'E' | 'S' | 'W'
 export type ActionType = 'GROW' | 'WAIT'
 
 export interface ITurnInfo {
-    grid: Cell[][]
+    grid: Grid
     myProteins: { [key in ProteinType]: number }
     oppProteins: { [key in ProteinType]: number }
     myOrgans: Organ[]

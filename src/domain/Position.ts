@@ -19,6 +19,15 @@ export class Position {
         return this.getDistanceX(otherPosition) + this.getDistanceY(otherPosition)
     }
 
+    getAdjacentPositions(){
+        return [
+            new Position(this._x + 1, this._y),
+            new Position(this._x, this._y + 1),
+            new Position(this._x, this._y - 1),
+            new Position(this._x - 1, this._y),
+        ]
+    }
+
     isSame(otherPosition: Position){
         return this._x === otherPosition.x && this._y === otherPosition.y
     }
