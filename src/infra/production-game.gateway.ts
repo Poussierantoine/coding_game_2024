@@ -1,5 +1,5 @@
 import {TurnInfo} from "../domain/TurnInfo";
-import {Direction, GameGateway, GetTurnInfo, ITurnInfo, OrganType, ProteinType} from "../interfaces";
+import {Direction, GameGateway, GetTurnInfo, ITurnInfo, OPPONENT, OrganType, Owner, ProteinType} from "../interfaces";
 import {Organ} from "../domain/Organ";
 import {Position} from "../domain/Position";
 import {Action} from "../domain/Action";
@@ -40,7 +40,7 @@ export class ProductionGameGateway implements GameGateway {
             const x: number = parseInt(entityInformations[0]);
             const y: number = parseInt(entityInformations[1]); // grid coordinate
             const type: string = entityInformations[2]; // WALL, ROOT, BASIC, TENTACLE, HARVESTER, SPORER, A, B, C, D
-            const owner: number = parseInt(entityInformations[3]); // 1 if your organ, 0 if enemy organ, -1 if neither
+            const owner: Owner = parseInt(entityInformations[3]); // 1 if your organ, 0 if enemy organ, -1 if neither
             const organId: number = parseInt(entityInformations[4]); // id of this entity if it's an organ, 0 otherwise
             const organDir: string = entityInformations[5]; // N,E,S,W or X if not an organ
             const organParentId: number = parseInt(entityInformations[6]);
@@ -58,11 +58,11 @@ export class ProductionGameGateway implements GameGateway {
                     direction: organDir as Direction,
                     parentId: organParentId,
                     rootId: organRootId,
-                    owner: owner as 0 | 1
+                    owner: owner as Owner
                 })
                 turnInfo.grid.getCell(new Position(x,y)).setOrgan(organ)
                 turnInfo.organMap.set(organId, organ)
-                if (owner === 1) {
+                if (owner === OPPONENT) {
                     turnInfo.myOrgans.push(organ)
                 } else {
                     turnInfo.oppOrgans.push(organ)

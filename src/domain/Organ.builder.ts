@@ -1,4 +1,4 @@
-import {Direction, OrganType} from "../interfaces";
+import {Direction, OrganType, Owner, PLAYER} from "../interfaces";
 import {Organ} from "./Organ";
 import {Position} from "./Position";
 
@@ -9,7 +9,7 @@ type OrganBuilderProps =  {
     direction: Direction
     rootId: number
     parentId: number
-    owner: 0 | 1
+    owner: Owner
 }
 
 export class OrganBuilder {
@@ -23,7 +23,7 @@ export class OrganBuilder {
             direction: props.direction ?? 'N',
             rootId: props.rootId ?? 1,
             parentId: props.parentId ?? 1,
-            owner: props.owner ?? 0,
+            owner: props.owner ?? PLAYER,
         }
     }
 

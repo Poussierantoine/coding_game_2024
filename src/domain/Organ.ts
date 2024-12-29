@@ -1,4 +1,4 @@
-import {Direction, OrganType} from "../interfaces";
+import {Direction, OPPONENT, OrganType, Owner, PLAYER} from "../interfaces";
 import {Position} from "./Position";
 
 export class Organ {
@@ -8,7 +8,7 @@ export class Organ {
     private direction: Direction;
     private rootId: number;
     private parentId: number;
-    private owner: 0 | 1;
+    private owner: Owner;
 
     constructor(
         organ: {
@@ -18,7 +18,7 @@ export class Organ {
             direction: Direction
             rootId: number
             parentId: number
-            owner: 0 | 1
+            owner: Owner
         }
     ) {
         this._id = organ.id;
@@ -41,12 +41,12 @@ export class Organ {
     }
 
     isOpponent(): boolean {
-        return this.owner === 1;
+        return this.owner === OPPONENT;
     }
 
     toString() {
         let result = '';
-        if (this.owner === 0) {
+        if (this.owner === PLAYER) {
             if(this.type === 'ROOT'){
                 result += 'R';
             }else{

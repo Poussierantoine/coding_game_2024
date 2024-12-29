@@ -1,6 +1,7 @@
 import {Cell} from "./Cell";
 import {Organ} from "./Organ";
 import {Position} from "./Position";
+import {OPPONENT} from "../interfaces";
 
 describe('Cell', () => {
 
@@ -29,7 +30,7 @@ describe('Cell', () => {
                 direction: 'N',
                 rootId: 1,
                 parentId: 1,
-                owner: 1
+                owner: OPPONENT
             });
             const cell = new Cell({position: commonPosition, isWall: false, organ});
             expect(cell.toString()).toBe('(r)');

@@ -35,3 +35,7 @@ export interface GameGateway {
     doAction: (action: Action) => void
 }
 
+export const PLAYER = 0;
+export const OPPONENT = 1;
+export type Owner = typeof PLAYER | typeof OPPONENT
+

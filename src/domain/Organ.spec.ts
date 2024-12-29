@@ -1,5 +1,6 @@
 import {Organ} from "./Organ";
 import {Position} from "./Position";
+import {OPPONENT, PLAYER} from "../interfaces";
 
 describe('Organ', () => {
     describe('toString', () => {
@@ -11,14 +12,14 @@ describe('Organ', () => {
             direction: 'N',
             rootId: 1,
             parentId: 1,
-            owner: 1
+            owner: OPPONENT
         } as const;
 
         it('returns n if it is opponent basic one', () => {
             const organ = new Organ({
                 ...commonParameters,
                 type: 'BASIC',
-                owner: 1
+                owner: OPPONENT
             });
 
             expect(organ.toString()).toBe('n');
@@ -28,7 +29,7 @@ describe('Organ', () => {
             const organ = new Organ({
                 ...commonParameters,
                 type: 'ROOT',
-                owner: 1
+                owner: OPPONENT
             });
 
             expect(organ.toString()).toBe('r');
@@ -38,7 +39,7 @@ describe('Organ', () => {
             const organ = new Organ({
                 ...commonParameters,
                 type: 'BASIC',
-                owner: 0
+                owner: PLAYER
             });
 
             expect(organ.toString()).toBe('N');
@@ -48,7 +49,7 @@ describe('Organ', () => {
             const organ = new Organ({
                 ...commonParameters,
                 type: 'ROOT',
-                owner: 0
+                owner: PLAYER
             });
 
             expect(organ.toString()).toBe('R');

@@ -1,4 +1,4 @@
-import {GameGateway, GridSize, ITurnInfo, ProteinType} from "../interfaces";
+import {GameGateway, GridSize, ITurnInfo, OPPONENT, PLAYER, ProteinType} from "../interfaces";
 import {TurnInfo} from "../domain/TurnInfo";
 import {Action} from "../domain/Action";
 import {Grid} from "../domain/Grid";
@@ -160,7 +160,7 @@ export class FakeTurnReader {
                     direction: 'N',
                     parentId: 0,
                     rootId: 0,
-                    owner: 1,
+                    owner: OPPONENT,
                 });
             } else {
                 organ = new Organ({
@@ -170,7 +170,7 @@ export class FakeTurnReader {
                     direction: 'N',
                     parentId: 0,
                     rootId: 0,
-                    owner: 1,
+                    owner: OPPONENT,
                 });
             }
             this.turn.oppOrgans.push(organ);
@@ -183,7 +183,7 @@ export class FakeTurnReader {
                     direction: 'N',
                     parentId: 0,
                     rootId: 0,
-                    owner: 0,
+                    owner: PLAYER,
                 });
             } else {
                 organ = new Organ({
@@ -193,7 +193,7 @@ export class FakeTurnReader {
                     direction: 'N',
                     parentId: 0,
                     rootId: 0,
-                    owner: 0,
+                    owner: PLAYER,
                 });
             }
             this.turn.myOrgans.push(organ);
