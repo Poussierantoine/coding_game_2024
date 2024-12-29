@@ -13,7 +13,12 @@ describe('Cell', () => {
 
         it('returns ( ) if the cell is empty', () => {
             const cell = new Cell({position: commonPosition, isWall: false});
-            expect(cell.toString()).toBe('( )');
+            expect(cell.toString()).toBe('(O)');
+        });
+
+        it('returns the wrapped protein if the cell contains one', () => {
+            const cell = new Cell({position: commonPosition, isWall: false, protein: 'A'});
+            expect(cell.toString()).toBe('(A)');
         });
 
         it(`returns the organ toString result if the cell is an organ`,  () => {
@@ -27,12 +32,7 @@ describe('Cell', () => {
                 owner: 1
             });
             const cell = new Cell({position: commonPosition, isWall: false, organ});
-            expect(cell.toString()).toBe('(O)');
-        });
-
-        it('returns ( ) if the cell is empty', () => {
-            const cell = new Cell({position: commonPosition, isWall: false});
-            expect(cell.toString()).toBe('( )');
+            expect(cell.toString()).toBe('(r)');
         });
 
     });

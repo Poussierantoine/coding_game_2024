@@ -29,7 +29,11 @@ export class TurnInfoBuilder {
     }
 
     build() {
-        return new TurnInfo(this.props, {width: this.props.grid.width, height: this.props.grid.height}, this.props.requiredActionCount)
+        return new TurnInfo({
+            turn: this.props,
+            gridSize: {width: this.props.grid.width, height: this.props.grid.height},
+            requiredActionCount: this.props.requiredActionCount
+        })
     }
 }
 

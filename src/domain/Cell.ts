@@ -61,9 +61,10 @@ export class Cell {
              result+= this._organ.toString()
         } else if(this._isWall){
             result += 'W';
-        } else {
-            result += ' ';
-
+        } else if (this._protein) {
+            result += this._protein;
+        } else{
+            result += 'O';
         }
         return result + ')';
     }

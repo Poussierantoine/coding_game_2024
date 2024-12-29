@@ -20,7 +20,7 @@ describe('TurnInfo', () => {
             const game = new TurnInfoBuilder({grid}).build()
 
             expect(game.toString()).toEqual(
-                `(W) (P)\n( ) (O)`
+                `(W) (R)\n(O) (r)`
             )
         });
     });

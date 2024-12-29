@@ -14,44 +14,44 @@ describe('Organ', () => {
             owner: 1
         } as const;
 
-        it('returns o if it is opponent basic one', () => {
+        it('returns n if it is opponent basic one', () => {
             const organ = new Organ({
                 ...commonParameters,
                 type: 'BASIC',
                 owner: 1
             });
 
-            expect(organ.toString()).toBe('o');
+            expect(organ.toString()).toBe('n');
         })
 
-        it('returns O if it is opponent root one', () => {
+        it('returns r if it is opponent root one', () => {
             const organ = new Organ({
                 ...commonParameters,
                 type: 'ROOT',
                 owner: 1
             });
 
-            expect(organ.toString()).toBe('O');
+            expect(organ.toString()).toBe('r');
         })
 
-        it('returns o if it is opponent basic one', () => {
+        it('returns N if it is opponent basic one', () => {
             const organ = new Organ({
                 ...commonParameters,
                 type: 'BASIC',
                 owner: 0
             });
 
-            expect(organ.toString()).toBe('p');
+            expect(organ.toString()).toBe('N');
         })
 
-        it('returns O if it is opponent root one', () => {
+        it('returns R if it is opponent root one', () => {
             const organ = new Organ({
                 ...commonParameters,
                 type: 'ROOT',
                 owner: 0
             });
 
-            expect(organ.toString()).toBe('P');
+            expect(organ.toString()).toBe('R');
         })
     });
 });

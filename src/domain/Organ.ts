@@ -4,7 +4,7 @@ import {Position} from "./Position";
 export class Organ {
     private _id: number;
     private _position: Position;
-    private type: OrganType;
+    private _type: OrganType;
     private direction: Direction;
     private rootId: number;
     private parentId: number;
@@ -23,7 +23,7 @@ export class Organ {
     ) {
         this._id = organ.id;
         this._position = organ.position;
-        this.type = organ.type;
+        this._type = organ.type;
         this.direction = organ.direction;
         this.rootId = organ.rootId;
         this.parentId = organ.parentId;
@@ -36,20 +36,27 @@ export class Organ {
     get position(): Position {
         return this._position;
     }
+    get type(): OrganType {
+        return this._type;
+    }
+
+    isOpponent(): boolean {
+        return this.owner === 1;
+    }
 
     toString() {
         let result = '';
         if (this.owner === 0) {
             if(this.type === 'ROOT'){
-                result += 'P';
+                result += 'R';
             }else{
-                result += 'p';
+                result += 'N';
             }
         } else {
             if(this.type === 'ROOT'){
-                result += 'O';
+                result += 'r';
             }else{
-                result += 'o';
+                result += 'n';
             }
         }
         return result;

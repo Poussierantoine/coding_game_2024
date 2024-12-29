@@ -87,7 +87,7 @@ export class ProductionGameGateway implements GameGateway {
 
         const requiredActionsCount = this.getRequiredActionsCount()
 
-        return new TurnInfo(turnInfo, gridSize, requiredActionsCount);
+        return new TurnInfo({turn: turnInfo, gridSize: gridSize, requiredActionCount: requiredActionsCount});
     }
 
     private getRequiredActionsCount = () => {

@@ -3,7 +3,7 @@ import {Organ} from "./Organ";
 import {Grid} from "./Grid";
 
 export class TurnInfo {
-     private readonly grid: Grid;
+     private readonly _grid: Grid;
      private readonly myProteins: { [key in ProteinType]: number };
      private readonly oppProteins: { [key in ProteinType]: number };
      private readonly myOrgans: Organ[];
@@ -14,11 +14,9 @@ export class TurnInfo {
      private readonly _requiredActionCount: number;
 
     constructor(
-        turn: ITurnInfo,
-        gridSize: GridSize,
-        requiredActionCount: number,
+        {turn, gridSize, requiredActionCount}: { turn: ITurnInfo, gridSize: GridSize, requiredActionCount: number },
     ) {
-        this.grid = turn.grid
+        this._grid = turn.grid
         this.myProteins = turn.myProteins
         this.oppProteins = turn.oppProteins
         this.myOrgans = turn.myOrgans
@@ -31,6 +29,10 @@ export class TurnInfo {
 
     get requiredActionCount () {
         return this._requiredActionCount
+    }
+
+    get grid() {
+        return this._grid
     }
 
     toString(){
