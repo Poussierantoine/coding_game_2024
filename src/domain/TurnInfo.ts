@@ -31,6 +31,14 @@ export class TurnInfo {
         return this._requiredActionCount
     }
 
+    get playerOrgans () {
+        return this.myOrgans
+    }
+
+    get opponentOrgans () {
+        return this.oppOrgans
+    }
+
     get grid() {
         return this._grid
     }
