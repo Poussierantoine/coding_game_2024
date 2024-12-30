@@ -71,7 +71,7 @@ export class FakeTurnReader {
 
     private readonly turn: ITurnInfo;
     private readonly gridSize: GridSize;
-    private readonly requiredActionCount: number;
+    private requiredActionCount: number;
 
     constructor(lines: string[]) {
         lines.forEach(line => {
@@ -189,6 +189,7 @@ export class FakeTurnReader {
                     rootId: 0,
                     owner: PLAYER,
                 });
+                this.requiredActionCount++;
             } else {
                 organ = new Organ({
                     id: organId,

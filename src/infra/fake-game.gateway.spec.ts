@@ -92,5 +92,12 @@ describe('FakeGameGateway', () => {
                 '(W)'
             ])).toThrow();
         })
+
+        it('increase requiredActionCount if there is player root organs', () => {
+            const reader = new FakeTurnReader([
+                '(R) (O) (O)'
+            ]);
+            expect(reader.getTurnInfo().requiredActionCount).toBe(1);
+        });
     });
 });
