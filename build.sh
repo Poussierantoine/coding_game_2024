@@ -4,15 +4,27 @@ OUTPUT_FILE="./dist/main.ts"
 
 # The files should be in the order you want them to be concatenated to have the right order for imports
 FILES=(
+#global uses
   "./src/interfaces.ts"
   "./src/domain/Position.ts"
-  "./src/domain/Organ.ts"
-  "./src/domain/Cell.ts"
-  "./src/domain/Turninfo.ts"
+
+#  grid and turn
+  "./src/domain/grid/Organ.ts"
+  "./src/domain/grid/Protein.ts"
+  "./src/domain/grid/Cell.ts"
+  "./src/domain/grid/Grid.ts"
+  "./src/domain/TurnInfo.ts"
+
+#  actions
+  "./src/domain/PathNode.ts"
+  "./src/application/a-star.service.ts"
   "./src/domain/Action.ts"
   "./src/domain/ActionWait.ts"
   "./src/domain/ActionGrow.ts"
+  "./src/application/get-nearest-element.service.ts"
   "./src/application/get-actions.service.ts"
+
+#  game run
   "./src/infra/production-game.gateway.ts"
   "./src/production-feature-flipping.ts"
   "./src/launch.ts"
