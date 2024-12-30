@@ -50,6 +50,10 @@ export class Grid {
         return adjacentCells
     }
 
+    getWalkableAdjacentCells(position: Position) {
+        return this.getAdjacentCells(position).filter(cell => !cell.isWall && !cell.organ)
+    }
+
     toString() {
         const columns = []
         for (const column of this.cells) {

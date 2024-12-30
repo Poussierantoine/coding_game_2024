@@ -28,6 +28,34 @@ describe('GetActionsService', () => {
 
     });
 
+    it('grow if there is no protein', () => {
+        const turnInfo = new FakeTurnReader([
+            '(R) (O)'
+        ]).getTurnInfo();
+        const service = new GetActionsService(new FakeGameGateway({
+            turns: [turnInfo]
+        }))
+        const emptyCellPosition = new Position(1, 0)
+
+        const actions = service.execute();
+        expect(actions).toHaveLength(1)
+        expect(actions[0]).toEqual(new ActionGrow(turnInfo.playerOrgans[0], emptyCellPosition))
+    });
+
+    it(`grow if the protein cannot be reached`, () => {
+        const turnInfo = new FakeTurnReader([
+            '(A) (W) (R) (O)'
+        ]).getTurnInfo();
+        const service = new GetActionsService(new FakeGameGateway({
+            turns: [turnInfo]
+        }))
+        const emptyCellPosition = new Position(3, 0)
+
+        const actions = service.execute();
+        expect(actions).toHaveLength(1)
+        expect(actions[0]).toEqual(new ActionGrow(turnInfo.playerOrgans[0], emptyCellPosition))
+    });
+
 
     it('returns an array of the length of requiredActionCount', () => {
         const turnInfo = new TurnInfoBuilder({
