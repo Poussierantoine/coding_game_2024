@@ -1,19 +1,19 @@
-import {ProteinType} from "../interfaces";
 import {Organ} from "./Organ";
-import {Position} from "./Position";
+import {Position} from "../Position";
+import {Protein} from "./Protein";
 
 
 export class Cell {
     private _position: Position;
     private _organ?: Organ;
-    private _protein?: ProteinType;
+    private _protein?: Protein;
     private _isWall: boolean;
 
     constructor(
         cell: {
             position: Position
             isWall: boolean
-            protein?: ProteinType
+            protein?: Protein
             organ?: Organ
         }
     ) {
@@ -33,7 +33,7 @@ export class Cell {
         return this._organ;
     }
 
-    get protein(): ProteinType | undefined{
+    get protein(): Protein | undefined{
         return this._protein;
     }
 
@@ -51,7 +51,7 @@ export class Cell {
     }
 
 
-    setProtein(value: ProteinType) {
+    setProtein(value: Protein) {
         this._protein = value;
     }
 
@@ -62,7 +62,7 @@ export class Cell {
         } else if(this._isWall){
             result += 'W';
         } else if (this._protein) {
-            result += this._protein;
+            result += this._protein.toString();
         } else{
             result += 'O';
         }

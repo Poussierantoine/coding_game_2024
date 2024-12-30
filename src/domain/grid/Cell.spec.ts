@@ -1,7 +1,8 @@
 import {Cell} from "./Cell";
 import {Organ} from "./Organ";
-import {Position} from "./Position";
-import {OPPONENT} from "../interfaces";
+import {Position} from "../Position";
+import {OPPONENT} from "../../interfaces";
+import {Protein} from "./Protein";
 
 describe('Cell', () => {
 
@@ -18,7 +19,7 @@ describe('Cell', () => {
         });
 
         it('returns the wrapped protein if the cell contains one', () => {
-            const cell = new Cell({position: commonPosition, isWall: false, protein: 'A'});
+            const cell = new Cell({position: commonPosition, isWall: false, protein: new Protein('A', commonPosition)});
             expect(cell.toString()).toBe('(A)');
         });
 

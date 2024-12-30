@@ -1,7 +1,8 @@
-import {Organ} from "./Organ";
+import {Organ} from "./grid/Organ";
 import {ProteinType} from "../interfaces";
 import {TurnInfo} from "./TurnInfo";
-import {Grid} from "./Grid";
+import {Grid} from "./grid/Grid";
+import {Protein} from "./grid/Protein";
 
 type TurnInfoBuilderProps = {
     grid: Grid
@@ -11,6 +12,7 @@ type TurnInfoBuilderProps = {
     oppOrgans: Organ[]
     organMap: Map<number, Organ>;
     requiredActionCount: number;
+    proteins: Protein[]
 }
 
 export class TurnInfoBuilder {
@@ -24,7 +26,8 @@ export class TurnInfoBuilder {
             myOrgans: props.myOrgans ?? [],
             oppOrgans: props.oppOrgans ?? [],
             organMap: props.organMap ?? new Map(),
-            requiredActionCount: props.requiredActionCount ?? 1
+            requiredActionCount: props.requiredActionCount ?? 1,
+            proteins: props.proteins ?? []
         }
     }
 

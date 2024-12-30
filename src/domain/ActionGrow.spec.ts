@@ -1,4 +1,4 @@
-import {OrganBuilder} from "./Organ.builder";
+import {OrganBuilder} from "./grid/Organ.builder";
 import {Position} from "./Position";
 import {ActionGrow} from "./ActionGrow";
 

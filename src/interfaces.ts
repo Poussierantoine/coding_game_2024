@@ -1,7 +1,8 @@
 import {TurnInfo} from "./domain/TurnInfo";
-import {Organ} from "./domain/Organ";
+import {Organ} from "./domain/grid/Organ";
 import {Action} from "./domain/Action";
-import {Grid} from "./domain/Grid";
+import {Grid} from "./domain/grid/Grid";
+import {Protein} from "./domain/grid/Protein";
 
 export type OrganType = 'ROOT' | 'BASIC'
 
@@ -18,6 +19,7 @@ export interface ITurnInfo {
     myOrgans: Organ[]
     oppOrgans: Organ[]
     organMap: Map<number, Organ>
+    proteins: Protein[]
 }
 
 export type GridSize = {

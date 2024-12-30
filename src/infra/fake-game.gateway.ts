@@ -1,10 +1,11 @@
 import {GameGateway, GridSize, ITurnInfo, OPPONENT, PLAYER, ProteinType} from "../interfaces";
 import {TurnInfo} from "../domain/TurnInfo";
 import {Action} from "../domain/Action";
-import {Grid} from "../domain/Grid";
-import {Cell} from "../domain/Cell";
-import {Organ} from "../domain/Organ";
+import {Grid} from "../domain/grid/Grid";
+import {Cell} from "../domain/grid/Cell";
+import {Organ} from "../domain/grid/Organ";
 import {Position} from "../domain/Position";
+import {Protein} from "../domain/grid/Protein";
 
 
 type FakeGameGatewayProps = {
@@ -104,6 +105,7 @@ export class FakeTurnReader {
             myOrgans: [],
             oppOrgans: [],
             organMap: new Map(),
+            proteins: []
         }
         this.parseGrid(splitLines);
     }
@@ -136,7 +138,9 @@ export class FakeTurnReader {
         } else if (cellType === this.WALL_CHAR) {
             cell = new Cell({position, isWall: true});
         }else if(new RegExp(this.PROTEIN_CHARS).test(cellType)){
-            cell = new Cell({position, isWall: false, protein: cellType as ProteinType});
+            let protein = new Protein(cellType as ProteinType, position);
+            cell = new Cell({position, isWall: false, protein: protein});
+            this.turn.proteins.push(protein)
         } else {
             const organ = this.parseOrgan(cellType, position, organId);
             cell = new Cell({position, isWall: false, organ})

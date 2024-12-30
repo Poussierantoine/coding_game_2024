@@ -1,6 +1,6 @@
-import {GridSize} from "../interfaces";
+import {GridSize} from "../../interfaces";
 import {Cell} from "./Cell";
-import {Position} from "./Position";
+import {Position} from "../Position";
 
 export class Grid {
     public readonly width: number;

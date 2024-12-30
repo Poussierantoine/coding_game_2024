@@ -1,5 +1,5 @@
-import {Direction, OPPONENT, OrganType, Owner, PLAYER} from "../interfaces";
-import {Position} from "./Position";
+import {Direction, OPPONENT, OrganType, Owner, PLAYER} from "../../interfaces";
+import {Position} from "../Position";
 
 export class Organ {
     private _id: number;

@@ -1,9 +1,9 @@
-import {CellBuilder} from "./Cell.builder";
-import {OrganBuilder} from "./Organ.builder";
+import {CellBuilder} from "./grid/Cell.builder";
+import {OrganBuilder} from "./grid/Organ.builder";
 import {TurnInfo} from "./TurnInfo";
 import {TurnInfoBuilder} from "./TurnInfoBuilder";
 import {Position} from "./Position";
-import {Grid} from "./Grid";
+import {Grid} from "./grid/Grid";
 import {OPPONENT, PLAYER} from "../interfaces";
 
 describe('TurnInfo', () => {

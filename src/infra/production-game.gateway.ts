@@ -1,9 +1,10 @@
 import {TurnInfo} from "../domain/TurnInfo";
-import {Direction, GameGateway, GetTurnInfo, ITurnInfo, OPPONENT, OrganType, Owner, ProteinType} from "../interfaces";
-import {Organ} from "../domain/Organ";
+import {Direction, GameGateway, GetTurnInfo, ITurnInfo, OPPONENT, OrganType, Owner} from "../interfaces";
+import {Organ} from "../domain/grid/Organ";
 import {Position} from "../domain/Position";
 import {Action} from "../domain/Action";
-import {Grid} from "../domain/Grid";
+import {Grid} from "../domain/grid/Grid";
+import {Protein} from "../domain/grid/Protein";
 
 export class ProductionGameGateway implements GameGateway {
     getInitialization = () => {
@@ -29,7 +30,8 @@ export class ProductionGameGateway implements GameGateway {
             oppProteins: { A: 0 , B: 0, C: 0, D: 0 },
             myOrgans: [],
             oppOrgans: [],
-            organMap: new Map()
+            organMap: new Map(),
+            proteins: []
         }
 
         // @ts-ignore
@@ -40,27 +42,30 @@ export class ProductionGameGateway implements GameGateway {
             const x: number = parseInt(entityInformations[0]);
             const y: number = parseInt(entityInformations[1]); // grid coordinate
             const type: string = entityInformations[2]; // WALL, ROOT, BASIC, TENTACLE, HARVESTER, SPORER, A, B, C, D
-            const owner: Owner = parseInt(entityInformations[3]); // 1 if your organ, 0 if enemy organ, -1 if neither
+            const owner: number = parseInt(entityInformations[3]); // 1 if your organ, 0 if enemy organ, -1 if neither
             const organId: number = parseInt(entityInformations[4]); // id of this entity if it's an organ, 0 otherwise
             const organDir: string = entityInformations[5]; // N,E,S,W or X if not an organ
             const organParentId: number = parseInt(entityInformations[6]);
             const organRootId: number = parseInt(entityInformations[7]);
 
+            let position = new Position(x,y);
             if (type === 'WALL') {
-                turnInfo.grid.getCell(new Position(x,y)).setIsWall(true)
+                turnInfo.grid.getCell(position).setIsWall(true)
             } else if (type === 'A' || type === 'B' || type === 'C' || type === 'D') {
-                turnInfo.grid.getCell(new Position(x,y)).setProtein( type as ProteinType)
+                let protein = new Protein(type, position);
+                turnInfo.grid.getCell(position).setProtein(protein)
+                turnInfo.proteins.push(protein)
             } else {
                 const organ = new Organ({
                     id: organId,
-                    position: new Position( x, y ),
+                    position: position,
                     type: type as OrganType,
                     direction: organDir as Direction,
                     parentId: organParentId,
                     rootId: organRootId,
                     owner: owner as Owner
                 })
-                turnInfo.grid.getCell(new Position(x,y)).setOrgan(organ)
+                turnInfo.grid.getCell(position).setOrgan(organ)
                 turnInfo.organMap.set(organId, organ)
                 if (owner === OPPONENT) {
                     turnInfo.myOrgans.push(organ)

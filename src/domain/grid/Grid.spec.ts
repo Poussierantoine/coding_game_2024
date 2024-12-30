@@ -1,6 +1,6 @@
 import {Cell} from "./Cell";
 import {Grid} from "./Grid";
-import {Position} from "./Position";
+import {Position} from "../Position";
 import {OrganBuilder} from "./Organ.builder";
 import {CellBuilder} from "./Cell.builder";
 

@@ -1,4 +1,4 @@
-import {Cell} from "./Cell";
+import {Cell} from "./grid/Cell";
 import {Position} from "./Position";
 
 export class PathNode {

@@ -1,12 +1,12 @@
-import {ProteinType} from "../interfaces";
 import {Organ} from "./Organ";
 import {Cell} from "./Cell";
-import {Position} from "./Position";
+import {Position} from "../Position";
+import {Protein} from "./Protein";
 
 type CellBuilderProps =  {
     position: Position
     isWall: boolean
-    protein?: ProteinType
+    protein?: Protein
     organ?: Organ
 }
 

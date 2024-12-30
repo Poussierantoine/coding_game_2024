@@ -1,7 +1,7 @@
-import {Grid} from "../domain/Grid";
+import {Grid} from "../domain/grid/Grid";
 import {Position} from "../domain/Position";
 import {PathNode} from "../domain/PathNode";
-import {Cell} from "../domain/Cell";
+import {Cell} from "../domain/grid/Cell";
 import {Logger} from "../utils/logger";
 
 

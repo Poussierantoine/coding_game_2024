@@ -1,6 +1,6 @@
-import {Direction, OrganType, Owner, PLAYER} from "../interfaces";
+import {Direction, OrganType, Owner, PLAYER} from "../../interfaces";
 import {Organ} from "./Organ";
-import {Position} from "./Position";
+import {Position} from "../Position";
 
 type OrganBuilderProps =  {
     id: number

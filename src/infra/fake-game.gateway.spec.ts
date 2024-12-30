@@ -57,10 +57,10 @@ describe('FakeGameGateway', () => {
             it('handle proteins', () => {
                 const reader = new FakeTurnReader(['(A) (B) (C) (D)']);
                 const grid = reader.getTurnInfo().grid;
-                expect(grid.getCell(new Position(0,0)).protein).toBe('A');
-                expect(grid.getCell(new Position(1,0)).protein).toBe('B');
-                expect(grid.getCell(new Position(2,0)).protein).toBe('C');
-                expect(grid.getCell(new Position(3,0)).protein).toBe('D');
+                expect(grid.getCell(new Position(0,0)).protein?.type).toBe('A');
+                expect(grid.getCell(new Position(1,0)).protein?.type).toBe('B');
+                expect(grid.getCell(new Position(2,0)).protein?.type).toBe('C');
+                expect(grid.getCell(new Position(3,0)).protein?.type).toBe('D');
             });
         });
 
@@ -72,7 +72,7 @@ describe('FakeGameGateway', () => {
             const grid = reader.getTurnInfo().grid;
             expect(grid.getCell(new Position(0,0)).isWall).toBe(true);
             expect(grid.getCell(new Position(1,0)).isWall).toBe(false);
-            expect(grid.getCell(new Position(0,1)).protein).toBe('B');
+            expect(grid.getCell(new Position(0,1)).protein?.type).toBe('B');
             expect(grid.getCell(new Position(1,1)).organ?.isOpponent()).toBe(true);
         });
 

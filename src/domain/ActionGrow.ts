@@ -1,7 +1,7 @@
 import {Position} from "./Position";
 import {OrganType} from "../interfaces";
 import {Action} from "./Action";
-import {Organ} from "./Organ";
+import {Organ} from "./grid/Organ";
 
 
 export class ActionGrow extends Action {

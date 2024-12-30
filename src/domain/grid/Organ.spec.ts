@@ -1,6 +1,6 @@
 import {Organ} from "./Organ";
-import {Position} from "./Position";
-import {OPPONENT, PLAYER} from "../interfaces";
+import {Position} from "../Position";
+import {OPPONENT, PLAYER} from "../../interfaces";
 
 describe('Organ', () => {
     describe('toString', () => {

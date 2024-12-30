@@ -1,6 +1,7 @@
 import {GridSize, ITurnInfo, ProteinType} from "../interfaces";
-import {Organ} from "./Organ";
-import {Grid} from "./Grid";
+import {Organ} from "./grid/Organ";
+import {Grid} from "./grid/Grid";
+import {Protein} from "./grid/Protein";
 
 export class TurnInfo {
      private readonly _grid: Grid;
@@ -12,6 +13,7 @@ export class TurnInfo {
      private readonly width: number;
      private readonly height: number;
      private readonly _requiredActionCount: number;
+     private readonly _proteins: Protein[];
 
     constructor(
         {turn, gridSize, requiredActionCount}: { turn: ITurnInfo, gridSize: GridSize, requiredActionCount: number },
@@ -22,6 +24,7 @@ export class TurnInfo {
         this.myOrgans = turn.myOrgans
         this.oppOrgans = turn.oppOrgans
         this.organMap = turn.organMap
+        this._proteins = turn.proteins
         this.width = gridSize.width
         this.height= gridSize.height
         this._requiredActionCount= requiredActionCount
@@ -37,6 +40,10 @@ export class TurnInfo {
 
     get opponentOrgans () {
         return this.oppOrgans
+    }
+
+    get proteins () {
+        return this._proteins
     }
 
     get grid() {
