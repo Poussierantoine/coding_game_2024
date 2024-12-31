@@ -1,12 +1,25 @@
-import {GameGateway, GridSize, PLAYER} from "../interfaces";
+import {GameGateway, GridSize} from "../interfaces";
 import {ActionWait} from "../domain/ActionWait";
 import {GetNearestElementService} from "./get-nearest-element.service";
-import {Position} from "../domain/Position";
 import {ActionGrow} from "../domain/ActionGrow";
 import {AStarService} from "./a-star.service";
 import {Action} from "../domain/Action";
 import {TurnInfo} from "../domain/TurnInfo";
+import {Protein} from "../domain/grid/Protein";
+import {Organ} from "../domain/grid/Organ";
+import {Cell} from "../domain/grid/Cell";
 
+
+type ProteinAndPath = {
+    protein: Protein,
+    path: Cell[]
+}
+
+type OrganWithRechableProtein = {
+    organ: Organ,
+    protein: Protein,
+    path: Cell[],
+}
 
 export class GetActionsService {
     private gridSize?: GridSize
@@ -27,47 +40,80 @@ export class GetActionsService {
         if(turn){
             const getNearestElementService = new GetNearestElementService(turn)
             for(let i = 0; i< turn.requiredActionCount; i++){
-                const rootOrgans = turn.playerOrgans.filter(organ => organ.type === 'ROOT')
-                // todo faire pour chaque organ
-                const rootOrgan = rootOrgans[0]
-                if(!rootOrgan){
-                    this.fallBackOnDefaultAction(actions)
+                const pathToReachableProtein = this.getNearestOrganWithReachableProtein(turn)
+
+                console.log(pathToReachableProtein?.path.map(cell => cell.position.toString()).join(' -> '))
+                if (pathToReachableProtein) {
+                    const firstCell = pathToReachableProtein.path[1]
+                    actions.push(new ActionGrow(pathToReachableProtein.organ, firstCell.position))
                 } else {
-                    let goal: Position|undefined = getNearestElementService.getNearestProtein(rootOrgan.position, 'A')?.position
-                    //TODO bloquer l'ennemi ?
-                    // if (!goal) {
-                    //     goal = getNearestElementService.getNearestOrgan(rootOrgan.position, OPPONENT)?.position
-                    // }
-                    if(!goal){
-                        this.growUntilYouDie(actions, turn)
-                    } else {
-                        const nearestPlayerOrgan = getNearestElementService.getNearestOrgan(
-                            goal,
-                            PLAYER)
-
-                        //TODO
-                        // si il ny a plus de protéine A, grow vers l'adversaire
-
-                        if(nearestPlayerOrgan) {
-                            const aStarService = new AStarService(turn.grid)
-                            const firstCell = aStarService.getShortestPath(nearestPlayerOrgan.position, goal!)?.[1];
-                            if (firstCell) {
-                                actions.push(new ActionGrow(nearestPlayerOrgan, firstCell.position))
-                            } else {
-                                this.growUntilYouDie(actions, turn)
-                            }
-                        }else {
-                            this.fallBackOnDefaultAction(actions)
-                        }
-                    }
+                    this.growUntilYouDie(actions, turn)
                 }
+
+                //PROBLEME: il doit y a voir un probleme de sort : au deuxieme tour il repart du ROOT
+                // alors que celui qu'il vient de créer est plus proche de 1 (peut etre a cause
+                // du nearestProtein (pas reachable) qui bypass un pe trop)
 
             }
         }
         return actions;
     }
 
-    growUntilYouDie(actions: Action[], turn: TurnInfo) {
+    private getNearestOrganWithReachableProtein(turn: TurnInfo): OrganWithRechableProtein | null {
+        const pathToProtein = turn.playerOrgans.map(organ => this.getPathToNearestProtein(organ, turn)).filter(path => path !== null)
+        if(pathToProtein.length){
+            pathToProtein.sort((a, b) => a.path.length - b.path.length);
+            return {
+                organ: pathToProtein[0].organ,
+                protein: pathToProtein[0].protein,
+                path: pathToProtein[0].path
+            }
+        } else {
+            const pathsToReachableProtein = turn.playerOrgans.map(organ => this.getPathToNearestReachableProtein(organ, turn)).filter(path => path !== null)
+
+            if (pathsToReachableProtein.length) {
+                pathsToReachableProtein.sort((a, b) => a.path.length - b.path.length);
+                return pathsToReachableProtein[0]
+            }
+            return null
+        }
+    }
+
+    private getPathToNearestProtein(organ: Organ, turn: TurnInfo): OrganWithRechableProtein | null {
+        const getNearestElementService = new GetNearestElementService(turn)
+        const nearestProtein = getNearestElementService.getNearestProtein(organ.position, 'A')
+        if(nearestProtein){
+            this.getPathToProtein(organ, nearestProtein, turn)
+        }
+        return null
+    }
+
+    private getPathToNearestReachableProtein(organ: Organ, turn: TurnInfo): OrganWithRechableProtein | null {
+        const proteins = turn.proteins.filter(protein => protein.type === 'A')
+        const pathToProteins = proteins.map(protein => {
+            return this.getPathToProtein(organ, protein, turn)
+        }).filter(path => path !== null)
+        if(pathToProteins.length){
+            pathToProteins.sort((a, b) => a.path.length - b.path.length);
+            return pathToProteins[0]
+        }
+        return null
+    }
+
+    private getPathToProtein(organ: Organ, protein: Protein, turn: TurnInfo): OrganWithRechableProtein | null {
+        const aStarService = new AStarService(turn.grid)
+        const path = aStarService.getShortestPath(organ.position, protein.position)
+        if (path) {
+            return {
+                organ,
+                protein,
+                path,
+            }
+        }
+        return null
+    }
+
+    private growUntilYouDie(actions: Action[], turn: TurnInfo) {
         const playerOrgans = turn.playerOrgans
         if(playerOrgans) {
             const organWithEmptyAdjacentCell = playerOrgans.find(organ =>
@@ -83,7 +129,7 @@ export class GetActionsService {
         }
     }
 
-    fallBackOnDefaultAction(actions: Action[]): void {
+    private fallBackOnDefaultAction(actions: Action[]): void {
         actions.push(new ActionWait())
     }
 

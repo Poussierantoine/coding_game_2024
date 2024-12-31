@@ -42,7 +42,74 @@ describe('GetActionsService', () => {
         expect(actions[0]).toEqual(new ActionGrow(turnInfo.playerOrgans[0], emptyCellPosition))
     });
 
-    it(`grow if the protein cannot be reached`, () => {
+    it('reach the nearest reachable protein', () => {
+        const turnInfo = new FakeTurnReader([
+            '(A) (W) (O) (O) (W) (A)',
+            '(O) (W) (O) (O) (R) (W)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (O) (O) (O) (O) (O)'
+        ]).getTurnInfo();
+        const turnInfo1 = new FakeTurnReader([
+            '(A) (W) (O) (O) (W) (A)',
+            '(O) (W) (O) (N) (R) (W)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (O) (O) (O) (O) (O)'
+        ]).getTurnInfo();
+        const turnInfo2 = new FakeTurnReader([
+            '(A) (W) (O) (O) (W) (A)',
+            '(O) (W) (N) (N) (R) (W)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (O) (O) (O) (O) (O)'
+        ]).getTurnInfo();
+        const turnInfo3 = new FakeTurnReader([
+            '(A) (W) (O) (O) (W) (A)',
+            '(O) (W) (N) (N) (R) (W)',
+            '(O) (W) (N) (O) (O) (O)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (O) (O) (O) (O) (O)'
+        ]).getTurnInfo();
+        const turnInfo4 = new FakeTurnReader([
+            '(A) (W) (O) (O) (W) (A)',
+            '(O) (W) (N) (N) (R) (W)',
+            '(O) (W) (N) (O) (O) (O)',
+            '(O) (W) (N) (O) (O) (O)',
+            '(O) (W) (O) (O) (O) (O)',
+            '(O) (O) (O) (O) (O) (O)'
+        ]).getTurnInfo();
+        const service = new GetActionsService(new FakeGameGateway({
+            turns: [turnInfo, turnInfo1, turnInfo2, turnInfo3, turnInfo4]
+        }))
+
+        const actions = service.execute();
+        expect(actions).toHaveLength(1)
+        let firstDestination = new Position(3, 1);
+        expect(actions[0]).toEqual(new ActionGrow(turnInfo.grid.getCell(new Position(4,1)).organ!, firstDestination))
+        const actions1 = service.execute();
+        expect(actions1).toHaveLength(1)
+        let secondDestination = new Position(2, 1);
+        expect(actions1[0]).toEqual(new ActionGrow(turnInfo1.grid.getCell(firstDestination).organ!, secondDestination))
+        const actions2 = service.execute();
+        expect(actions2).toHaveLength(1)
+        let thirdDestination = new Position(2, 2);
+        expect(actions2[0]).toEqual(new ActionGrow(turnInfo2.grid.getCell(secondDestination).organ!, thirdDestination))
+        const actions3 = service.execute();
+        expect(actions3).toHaveLength(1)
+        let fourthDestination = new Position(2, 3);
+        expect(actions3[0]).toEqual(new ActionGrow(turnInfo3.grid.getCell(thirdDestination).organ!, fourthDestination))
+        const actions4 = service.execute();
+        expect(actions4).toHaveLength(1)
+        //here i expect he turn left because he is reaching (0,0) (he don't grow without goal)
+        expect(actions4[0]).toEqual(new ActionGrow(turnInfo4.grid.getCell(fourthDestination).organ!, new Position(2, 4)))
+    });
+
+    it(`grow without goal if any protein can be reached (take empty cells)`, () => {
         const turnInfo = new FakeTurnReader([
             '(A) (W) (R) (O)'
         ]).getTurnInfo();
