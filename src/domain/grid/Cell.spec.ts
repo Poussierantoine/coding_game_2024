@@ -1,7 +1,7 @@
 import {Cell} from "./Cell";
 import {Organ} from "./Organ";
 import {Position} from "../Position";
-import {OPPONENT} from "../../interfaces";
+import {OPPONENT, UP} from "../../interfaces";
 import {Protein} from "./Protein";
 
 describe('Cell', () => {
@@ -28,7 +28,7 @@ describe('Cell', () => {
                 id: 1,
                 position: commonPosition,
                 type: 'ROOT',
-                direction: 'N',
+                direction: UP,
                 rootId: 1,
                 parentId: 1,
                 owner: OPPONENT

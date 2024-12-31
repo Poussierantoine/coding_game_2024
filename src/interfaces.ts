@@ -8,7 +8,12 @@ export type OrganType = 'ROOT' | 'BASIC'
 
 export type ProteinType = 'A' | 'B' | 'C' | 'D'
 
-export type Direction = 'N' | 'E' | 'S' | 'W'
+export const UP = 'N'
+export const RIGHT = 'E'
+export const DOWN = 'S'
+export const LEFT = 'W'
+
+export type Direction = typeof UP | typeof RIGHT | typeof DOWN | typeof LEFT
 
 export type ActionType = 'GROW' | 'WAIT'
 

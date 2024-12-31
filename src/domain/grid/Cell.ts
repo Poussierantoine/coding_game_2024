@@ -68,4 +68,8 @@ export class Cell {
         }
         return result + ')';
     }
+
+    getDirectionTo(position: Position): string {
+        return this._position.getDirectionTo(position);
+    }
 }

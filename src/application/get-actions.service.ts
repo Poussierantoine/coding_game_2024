@@ -38,7 +38,6 @@ export class GetActionsService {
         const actions = []
 
         if(turn){
-            const getNearestElementService = new GetNearestElementService(turn)
             for(let i = 0; i< turn.requiredActionCount; i++){
                 const pathToReachableProtein = this.getNearestOrganWithReachableProtein(turn)
 
@@ -50,10 +49,14 @@ export class GetActionsService {
                     this.growUntilYouDie(actions, turn)
                 }
 
-                //PROBLEME: il doit y a voir un probleme de sort : au deuxieme tour il repart du ROOT
-                // alors que celui qu'il vient de créer est plus proche de 1 (peut etre a cause
-                // du nearestProtein (pas reachable) qui bypass un pe trop)
-
+                // TODO: position doit pouvoir trouver la direction vers un autre case de la
+                // meme ligne ou colonne
+                // pouvoir dans grid a partir d'une position trouver les cases vides a cote ?
+                // ou ici, si dans le path il ne reste que deux actions, mettre un harvester au lieu d'avancer
+                // grow vers une protein non harrvestée par defaut
+                //grow vers l'ennemi si toutes le proteines sont harvestées
+                // prendre en compte les proteines restantes dans le choix ddes acttion / strategie / astar
+                //refacto pour prendre un tour au lieu de la gateway
             }
         }
         return actions;

@@ -1,3 +1,5 @@
+import {Direction, DOWN, LEFT, RIGHT, UP} from "../interfaces";
+
 export class Position {
     private readonly _x: number;
     private readonly _y: number;
@@ -30,6 +32,19 @@ export class Position {
 
     isSame(otherPosition: Position) {
         return this._x === otherPosition.x && this._y === otherPosition.y
+    }
+
+    getDirectionTo(otherPosition: Position): Direction{
+        if(this._x !== otherPosition.x && this._y !== otherPosition.y){
+            throw new Error('the positions are not on the same line or column')
+        }
+        if(otherPosition.isSame(this)){
+            throw new Error('the positions are the same')
+        }
+        if(this._x === otherPosition.x){
+            return this._y < otherPosition.y ? DOWN : UP
+        }
+        return this._x < otherPosition.x ? RIGHT : LEFT
     }
 
     toString() {

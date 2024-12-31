@@ -1,4 +1,4 @@
-import {GameGateway, GridSize, ITurnInfo, OPPONENT, PLAYER, ProteinType} from "../interfaces";
+import {GameGateway, GridSize, ITurnInfo, OPPONENT, PLAYER, ProteinType, UP} from "../interfaces";
 import {TurnInfo} from "../domain/TurnInfo";
 import {Action} from "../domain/Action";
 import {Grid} from "../domain/grid/Grid";
@@ -161,7 +161,7 @@ export class FakeTurnReader {
                     id: organId,
                     position,
                     type: 'ROOT',
-                    direction: 'N',
+                    direction: UP,
                     parentId: 0,
                     rootId: 0,
                     owner: OPPONENT,
@@ -171,7 +171,7 @@ export class FakeTurnReader {
                     id: organId,
                     position,
                     type: 'BASIC',
-                    direction: 'N',
+                    direction: UP,
                     parentId: 0,
                     rootId: 0,
                     owner: OPPONENT,
@@ -184,7 +184,7 @@ export class FakeTurnReader {
                     id: organId,
                     position,
                     type: 'ROOT',
-                    direction: 'N',
+                    direction: UP,
                     parentId: 0,
                     rootId: 0,
                     owner: PLAYER,
@@ -195,7 +195,7 @@ export class FakeTurnReader {
                     id: organId,
                     position,
                     type: 'BASIC',
-                    direction: 'N',
+                    direction: UP,
                     parentId: 0,
                     rootId: 0,
                     owner: PLAYER,

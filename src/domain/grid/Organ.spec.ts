@@ -1,6 +1,6 @@
 import {Organ} from "./Organ";
 import {Position} from "../Position";
-import {OPPONENT, PLAYER} from "../../interfaces";
+import {OPPONENT, PLAYER, UP} from "../../interfaces";
 
 describe('Organ', () => {
     describe('toString', () => {
@@ -9,7 +9,7 @@ describe('Organ', () => {
             id: 1,
             position: new Position(0,0),
             type: 'ROOT',
-            direction: 'N',
+            direction: UP,
             rootId: 1,
             parentId: 1,
             owner: OPPONENT
