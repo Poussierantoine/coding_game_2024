@@ -5,7 +5,7 @@ export class Organ {
     private _id: number;
     private _position: Position;
     private _type: OrganType;
-    private direction: Direction;
+    private _direction: Direction;
     private rootId: number;
     private parentId: number;
     private owner: Owner;
@@ -24,7 +24,7 @@ export class Organ {
         this._id = organ.id;
         this._position = organ.position;
         this._type = organ.type;
-        this.direction = organ.direction;
+        this._direction = organ.direction;
         this.rootId = organ.rootId;
         this.parentId = organ.parentId;
         this.owner = organ.owner;
@@ -37,6 +37,9 @@ export class Organ {
         return this._position;
     }
     get type(): OrganType {
+        return this._type;
+    }
+    get direction(): OrganType {
         return this._type;
     }
 

@@ -1,5 +1,6 @@
 import {FakeTurnReader} from "./fake-game.gateway";
 import {Position} from "../domain/Position";
+import {DOWN, LEFT, RIGHT, UP} from "../interfaces";
 
 describe('FakeGameGateway', () => {
 
@@ -22,38 +23,6 @@ describe('FakeGameGateway', () => {
                 expect(reader.getTurnInfo().grid.getCell(new Position(0,0)).isWall).toBe(true);
             });
 
-            it('handle player root organ', () => {
-                const reader = new FakeTurnReader(['(R)']);
-                const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
-                expect(organ).toBeDefined();
-                expect(organ?.type).toBe('ROOT');
-                expect(organ?.isOpponent()).toBe(false);
-            });
-
-            it('handle player basic organ', () => {
-                const reader = new FakeTurnReader(['(N)']);
-                const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
-                expect(organ).toBeDefined();
-                expect(organ?.type).toBe('BASIC');
-                expect(organ?.isOpponent()).toBe(false);
-            });
-
-            it('handle opponent root organ', () => {
-                const reader = new FakeTurnReader(['(r)']);
-                const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
-                expect(organ).toBeDefined();
-                expect(organ?.type).toBe('ROOT');
-                expect(organ?.isOpponent()).toBe(true);
-            });
-
-            it('handle opponent basic organ', () => {
-                const reader = new FakeTurnReader(['(n)']);
-                const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
-                expect(organ).toBeDefined();
-                expect(organ?.type).toBe('BASIC');
-                expect(organ?.isOpponent()).toBe(true);
-            });
-
             it('handle proteins', () => {
                 const reader = new FakeTurnReader(['(A) (B) (C) (D)']);
                 const grid = reader.getTurnInfo().grid;
@@ -61,6 +30,74 @@ describe('FakeGameGateway', () => {
                 expect(grid.getCell(new Position(1,0)).protein?.type).toBe('B');
                 expect(grid.getCell(new Position(2,0)).protein?.type).toBe('C');
                 expect(grid.getCell(new Position(3,0)).protein?.type).toBe('D');
+            });
+
+            describe('concerning organs', () => {
+                it('handle player root organ', () => {
+                    const reader = new FakeTurnReader(['(R)']);
+                    const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
+                    expect(organ).toBeDefined();
+                    expect(organ?.type).toBe('ROOT');
+                    expect(organ?.isOpponent()).toBe(false);
+                });
+
+                it('handle player basic organ', () => {
+                    const reader = new FakeTurnReader(['(N)']);
+                    const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
+                    expect(organ).toBeDefined();
+                    expect(organ?.type).toBe('BASIC');
+                    expect(organ?.isOpponent()).toBe(false);
+                });
+
+                it('handle opponent root organ', () => {
+                    const reader = new FakeTurnReader(['(r)']);
+                    const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
+                    expect(organ).toBeDefined();
+                    expect(organ?.type).toBe('ROOT');
+                    expect(organ?.isOpponent()).toBe(true);
+                });
+
+                it('handle opponent basic organ', () => {
+                    const reader = new FakeTurnReader(['(n)']);
+                    const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
+                    expect(organ).toBeDefined();
+                    expect(organ?.type).toBe('BASIC');
+                    expect(organ?.isOpponent()).toBe(true);
+                });
+
+                describe('concerning directions', () => {
+                    it('handle up directions', () => {
+                        const reader = new FakeTurnReader(['(R;up)']);
+                        const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
+                        expect(organ).toBeDefined();
+                        expect(organ?.direction).toBe(UP);
+                        expect(organ?.isOpponent()).toBe(false);
+                    });
+
+                    it('handle down directions', () => {
+                        const reader = new FakeTurnReader(['(r;do)']);
+                        const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
+                        expect(organ).toBeDefined();
+                        expect(organ?.direction).toBe(DOWN);
+                        expect(organ?.isOpponent()).toBe(false);
+                    });
+
+                    it('handle left directions', () => {
+                        const reader = new FakeTurnReader(['(n;le)']);
+                        const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
+                        expect(organ).toBeDefined();
+                        expect(organ?.direction).toBe(LEFT);
+                        expect(organ?.isOpponent()).toBe(false);
+                    });
+
+                    it('handle right directions', () => {
+                        const reader = new FakeTurnReader(['(N;ri)']);
+                        const organ = reader.getTurnInfo().grid.getCell(new Position(0,0)).organ;
+                        expect(organ).toBeDefined();
+                        expect(organ?.direction).toBe(RIGHT);
+                        expect(organ?.isOpponent()).toBe(false);
+                    });
+                });
             });
         });
 

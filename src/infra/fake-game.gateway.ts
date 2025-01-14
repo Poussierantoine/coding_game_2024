@@ -59,13 +59,22 @@ export class FakeTurnReader {
     private readonly D_PROTEIN_CHAR = 'D';
     private readonly PROTEIN_CHARS = `${this.A_PROTEIN_CHAR}|${this.B_PROTEIN_CHAR}|${this.C_PROTEIN_CHAR}|${this.D_PROTEIN_CHAR}`;
 
+    private readonly UP_CHAR = 'up';
+    private readonly DOWN_CHAR = 'do';
+    private readonly RIGHT_CHAR = 'ri';
+    private readonly LEFT_CHAR = 'le';
+    private readonly NO_DIRECTION_CHAR = 'no';
+    private readonly DIRECTION_CHARS = `${this.UP_CHAR}|${this.RIGHT_CHAR}|${this.DOWN_CHAR}|${this.LEFT_CHAR}|${this.NO_DIRECTION_CHAR}`;
+
     private readonly OPPONENT_ROOT_ORGAN_CHAR = 'r';
     private readonly PLAYER_ROOT_ORGAN_CHAR = 'R';
     private readonly OPPONENT_BASIC_ORGAN_CHAR = 'n';
     private readonly PLAYER_BASIC_ORGAN_CHAR = 'N';
     private readonly ORGAN_CHARS = `${this.OPPONENT_ROOT_ORGAN_CHAR}|${this.PLAYER_ROOT_ORGAN_CHAR}|${this.OPPONENT_BASIC_ORGAN_CHAR}|${this.PLAYER_BASIC_ORGAN_CHAR}`;
 
-    private readonly CELL = `\\((${this.WALL_CHAR}|${this.EMPTY_CELL_CHAR}|${this.ORGAN_CHARS}|${this.PROTEIN_CHARS})\\)`;
+    private readonly ORGAN_GROUP = `(${this.ORGAN_CHARS}(;${this.DIRECTION_CHARS})?)`;
+
+    private readonly CELL = `\\((${this.WALL_CHAR}|${this.EMPTY_CELL_CHAR}|${this.ORGAN_GROUP}|${this.PROTEIN_CHARS})\\)`;
     private readonly SEPARATOR = ' ';
     private readonly LINE = `(${this.CELL}(${this.SEPARATOR}${this.CELL})*)`;
 
@@ -75,6 +84,11 @@ export class FakeTurnReader {
 
     constructor(lines: string[]) {
         lines.forEach(line => {
+            // console.log(line)
+            // console.log(this.LINE)
+            // console.log(new RegExp(this.LINE).test(line))
+            // console.log(this.CELL)
+            // console.log(new RegExp(this.CELL).test(line))
             if (!new RegExp(this.LINE).test(line)) {
                 throw new Error('Invalid character in grid, each line should be (char) separated by space. allowed characters are W, r, R, b, B, or space');
             }

@@ -28,22 +28,12 @@ export class GetActionsService {
         for (let i = 0; i < turn.requiredActionCount; i++) {
             const pathToReachableProtein = this.getNearestOrganWithReachableProtein(turn)
 
-            console.log(pathToReachableProtein?.path.map(cell => cell.position.toString()).join(' -> '))
             if (pathToReachableProtein) {
                 const firstCell = pathToReachableProtein.path[1]
                 actions.push(new ActionGrow(pathToReachableProtein.organ, firstCell.position))
             } else {
                 this.growUntilYouDie(actions, turn)
             }
-
-            // TODO: position doit pouvoir trouver la direction vers un autre case de la
-            // meme ligne ou colonne
-            // pouvoir dans grid a partir d'une position trouver les cases vides a cote ?
-            // ou ici, si dans le path il ne reste que deux actions, mettre un harvester au lieu d'avancer
-            // grow vers une protein non harrvestée par defaut
-            //grow vers l'ennemi si toutes le proteines sont harvestées
-            // prendre en compte les proteines restantes dans le choix ddes acttion / strategie / astar
-            //refacto pour prendre un tour au lieu de la gateway
         }
 
         return actions;
