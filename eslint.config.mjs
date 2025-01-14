@@ -19,6 +19,7 @@ export default [
     'import/extensions': 'off',
     'no-restricted-syntax': 'off',
     'no-plusplus': 'off',
-    quotes: ['error', 'single']
+    quotes: ['error', 'single'],
+    'no-trailing-spaces': 'error'
   }},
 ];

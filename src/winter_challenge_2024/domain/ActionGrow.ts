@@ -1,25 +1,25 @@
-import {Position} from "./Position";
-import {OrganType} from "../interfaces";
-import {Action} from "./Action";
-import {Organ} from "./grid/Organ";
+import {Position} from './Position';
+import {OrganType} from '../interfaces';
+import {Action} from './Action';
+import {Organ} from './grid/Organ';
 
 
 export class ActionGrow extends Action {
-    private readonly typeToCreate: OrganType = 'BASIC'
+  private readonly typeToCreate: OrganType = 'BASIC';
 
-    constructor(
+  constructor(
         private readonly organ: Organ,
         private readonly destination: Position
-    ){
-        super('GROW')
-        if(organ.position.isSame(destination)){
-            throw new Error('the destination should be on another cell from the organ')
-        }
-        this.organ = organ
-        this.destination = destination
+  ){
+    super('GROW');
+    if(organ.position.isSame(destination)){
+      throw new Error('the destination should be on another cell from the organ');
     }
+    this.organ = organ;
+    this.destination = destination;
+  }
 
-    toString() {
-        return `${this.actionType} ${this.organ.id} ${this.destination.toString()} ${this.typeToCreate}`;
-    }
+  toString() {
+    return `${this.actionType} ${this.organ.id} ${this.destination.toString()} ${this.typeToCreate}`;
+  }
 }

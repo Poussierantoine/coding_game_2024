@@ -1,14 +1,14 @@
 export class Logger {
-    logs: string[] = []
-    constructor() {
-    }
+  logs: string[] = [];
+  constructor() {
+  }
 
-    log(message: string) {
-        this.logs.push(message)
-    }
+  log(message: string) {
+    this.logs.push(message);
+  }
 
-    printLogs() {
-        // this.logs.forEach(log => console.log(log))
-        console.log(this.logs)
-    }
+  printLogs() {
+    // this.logs.forEach(log => console.log(log))
+    console.log(this.logs);
+  }
 }

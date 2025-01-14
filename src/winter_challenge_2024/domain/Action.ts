@@ -1,10 +1,10 @@
-import {ActionType} from "../interfaces";
+import {ActionType} from '../interfaces';
 
 
 export abstract class Action {
-    protected constructor(
+  protected constructor(
         protected readonly actionType: ActionType,
-    ){}
+  ){}
 
     abstract toString() : string;
 }
