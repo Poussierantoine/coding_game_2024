@@ -5,7 +5,8 @@
   "main": "src/winter_challenge_2024/main.ts",
   "scripts": {
     "test": "jest",
-    "build": "chmod +x src/winter_challenge_2024/build.sh && ./build.sh",
+    "build-winter-challenge": "chmod +x src/winter_challenge_2024/build.sh && ./build.sh",
+    "build:mars": "esbuild src/mars_lander/index.ts --bundle --outfile=src/mars_lander/out.js && cat src/mars_lander/out.js | pbcopy",
     "copy-build": "pnpm build && cat ./dist/main.ts | pbcopy"
   },
   "keywords": [],
@@ -23,6 +24,7 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.20.0"
+    "typescript-eslint": "^8.20.0",
+    "esbuild": "^0.25.0"
   }
 }
