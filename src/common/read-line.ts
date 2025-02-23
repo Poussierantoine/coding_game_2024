@@ -1,2 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const readline = (() => {}) as unknown as () => any;
+export const readline = (() => {
+  throw new Error('should not be used in production');
+}) as unknown as () => string;
