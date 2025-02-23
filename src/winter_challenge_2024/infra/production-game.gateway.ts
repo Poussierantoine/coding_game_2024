@@ -5,10 +5,10 @@ import {Position} from '../domain/Position';
 import {Action} from '../domain/Action';
 import {Grid} from '../domain/grid/Grid';
 import {Protein} from '../domain/grid/Protein';
+import {readline} from '../../common/read-line';
 
 export class ProductionGameGateway implements GameGateway {
   getInitialization = () => {
-    // @ts-ignore
     const gridSize: string[] = readline().split(' ');
     const width: number = parseInt(gridSize[0]); // columns in the game grid
     const height: number = parseInt(gridSize[1]); // rows in the game grid
@@ -34,10 +34,8 @@ export class ProductionGameGateway implements GameGateway {
       proteins: []
     };
 
-    // @ts-ignore
     const entityCount: number = parseInt(readline());
     for (let i = 0; i < entityCount; i++) {
-      // @ts-ignore
       const entityInformations: string[] = readline().split(' ');
       const x: number = parseInt(entityInformations[0]);
       const y: number = parseInt(entityInformations[1]); // grid coordinate
@@ -75,14 +73,12 @@ export class ProductionGameGateway implements GameGateway {
       }
     }
 
-    // @ts-ignore
     const playerVitamins: string[] = readline().split(' ');
     const myA: number = parseInt(playerVitamins[0]);
     const myB: number = parseInt(playerVitamins[1]);
     const myC: number = parseInt(playerVitamins[2]);
     const myD: number = parseInt(playerVitamins[3]); // your protein stock
     turnInfo.myProteins = { A: myA, B: myB, C: myC, D: myD };
-    // @ts-ignore
     const opponentVitamins: string[] = readline().split(' ');
     const oppA: number = parseInt(opponentVitamins[0]);
     const oppB: number = parseInt(opponentVitamins[1]);
@@ -96,7 +92,6 @@ export class ProductionGameGateway implements GameGateway {
   };
 
   private getRequiredActionsCount = () => {
-    // @ts-ignore
     return parseInt(readline()); // your number of organisms, output an action for each one in any order
   };
 }

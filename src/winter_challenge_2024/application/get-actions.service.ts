@@ -8,7 +8,7 @@ import {Protein} from '../domain/grid/Protein';
 import {Organ} from '../domain/grid/Organ';
 import {Cell} from '../domain/grid/Cell';
 
-
+//eslint-disable-next-line @typescript-eslint/no-unused-vars
 type ProteinAndPath = {
     protein: Protein,
     path: Cell[]

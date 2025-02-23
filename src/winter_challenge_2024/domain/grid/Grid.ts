@@ -44,8 +44,8 @@ export class Grid {
     adjacentPositions.forEach(pos => {
       try{
         adjacentCells.push(this.getCell(pos));
-      } catch (e){
-      }
+        //eslint-disable-next-line
+      } catch (e){}
     });
     return adjacentCells;
   }

@@ -1,6 +1,5 @@
 import {CellBuilder} from './grid/Cell.builder';
 import {OrganBuilder} from './grid/Organ.builder';
-import {TurnInfo} from './TurnInfo';
 import {TurnInfoBuilder} from './TurnInfoBuilder';
 import {Position} from './Position';
 import {Grid} from './grid/Grid';
