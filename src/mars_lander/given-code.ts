@@ -3,18 +3,18 @@
  * Auto-generated code below aims at helping you parse
  * the standard input according to the problem statement.
  **/
-import {readline} from '../common/read-line';
+import {readlineAbstraction} from '../common/readline-abstraction';
 
-const surfaceN: number = parseInt(readline()); // the number of points used to draw the surface of Mars.
+const surfaceN: number = parseInt(readlineAbstraction()); // the number of points used to draw the surface of Mars.
 for (let i = 0; i < surfaceN; i++) {
-  var inputs: string[] = readline().split(' ');
+  var inputs: string[] = readlineAbstraction().split(' ');
   const landX: number = parseInt(inputs[0]); // X coordinate of a surface point. (0 to 6999)
   const landY: number = parseInt(inputs[1]); // Y coordinate of a surface point. By linking all the points together in a sequential fashion, you form the surface of Mars.
 }
 
 // game loop
 while (true) {
-  var inputs: string[] = readline().split(' ');
+  var inputs: string[] = readlineAbstraction().split(' ');
   const X: number = parseInt(inputs[0]);
   const Y: number = parseInt(inputs[1]);
   const hSpeed: number = parseInt(inputs[2]); // the horizontal speed (in m/s), can be negative.

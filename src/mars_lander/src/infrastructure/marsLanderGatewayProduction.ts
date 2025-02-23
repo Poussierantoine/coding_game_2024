@@ -1,13 +1,13 @@
 import {Position} from '../domain/Position';
-import {readline} from '../../../common/read-line';
+import {readlineAbstraction} from '../../../common/readline-abstraction';
 import {MarsLanderGateway} from './marsLanderGateway';
 
 export class MarsLanderGatewayProduction implements MarsLanderGateway {
   getLandInfo() {
-    const surfaceNumberOfPoints: number = parseInt(readline());
+    const surfaceNumberOfPoints: number = parseInt(readlineAbstraction());
     const landInfo: Position[] = [];
     for (let i = 0; i < surfaceNumberOfPoints; i++) {
-      const [x, y]: string[] = readline().split(' ');
+      const [x, y]: string[] = readlineAbstraction().split(' ');
       landInfo.push(new Position(parseInt(x), parseInt(y)));
     }
     return landInfo;
@@ -22,7 +22,7 @@ export class MarsLanderGatewayProduction implements MarsLanderGateway {
       fuel,
       rotationAngle,
       power
-    ]: string[] = readline().split(' ');
+    ]: string[] = readlineAbstraction().split(' ');
 
     const shipPosition = new Position(parseInt(positionX), parseInt(positionY));
     return {

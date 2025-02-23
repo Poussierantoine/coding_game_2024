@@ -5,11 +5,11 @@ import {Position} from '../domain/Position';
 import {Action} from '../domain/Action';
 import {Grid} from '../domain/grid/Grid';
 import {Protein} from '../domain/grid/Protein';
-import {readline} from '../../common/read-line';
+import {readlineAbstraction} from '../../common/readline-abstraction';
 
 export class ProductionGameGateway implements GameGateway {
   getInitialization = () => {
-    const gridSize: string[] = readline().split(' ');
+    const gridSize: string[] = readlineAbstraction().split(' ');
     const width: number = parseInt(gridSize[0]); // columns in the game grid
     const height: number = parseInt(gridSize[1]); // rows in the game grid
     return { width, height };
@@ -34,9 +34,9 @@ export class ProductionGameGateway implements GameGateway {
       proteins: []
     };
 
-    const entityCount: number = parseInt(readline());
+    const entityCount: number = parseInt(readlineAbstraction());
     for (let i = 0; i < entityCount; i++) {
-      const entityInformations: string[] = readline().split(' ');
+      const entityInformations: string[] = readlineAbstraction().split(' ');
       const x: number = parseInt(entityInformations[0]);
       const y: number = parseInt(entityInformations[1]); // grid coordinate
       const type: string = entityInformations[2]; // WALL, ROOT, BASIC, TENTACLE, HARVESTER, SPORER, A, B, C, D
@@ -73,13 +73,13 @@ export class ProductionGameGateway implements GameGateway {
       }
     }
 
-    const playerVitamins: string[] = readline().split(' ');
+    const playerVitamins: string[] = readlineAbstraction().split(' ');
     const myA: number = parseInt(playerVitamins[0]);
     const myB: number = parseInt(playerVitamins[1]);
     const myC: number = parseInt(playerVitamins[2]);
     const myD: number = parseInt(playerVitamins[3]); // your protein stock
     turnInfo.myProteins = { A: myA, B: myB, C: myC, D: myD };
-    const opponentVitamins: string[] = readline().split(' ');
+    const opponentVitamins: string[] = readlineAbstraction().split(' ');
     const oppA: number = parseInt(opponentVitamins[0]);
     const oppB: number = parseInt(opponentVitamins[1]);
     const oppC: number = parseInt(opponentVitamins[2]);
@@ -92,6 +92,6 @@ export class ProductionGameGateway implements GameGateway {
   };
 
   private getRequiredActionsCount = () => {
-    return parseInt(readline()); // your number of organisms, output an action for each one in any order
+    return parseInt(readlineAbstraction()); // your number of organisms, output an action for each one in any order
   };
 }
