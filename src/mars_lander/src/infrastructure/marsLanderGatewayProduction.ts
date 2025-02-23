@@ -1,5 +1,5 @@
-import {Position} from './Position';
-import {readline} from '../../common/read-line';
+import {Position} from '../domain/Position';
+import {readline} from '../../../common/read-line';
 import {MarsLanderGateway} from './marsLanderGateway';
 
 export class MarsLanderGatewayProduction implements MarsLanderGateway {

@@ -1,4 +1,4 @@
-import {Position} from './Position';
+import {Position} from '../domain/Position';
 
 export type ShipInfo = {
   position: Position,
