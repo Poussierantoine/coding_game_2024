@@ -58,6 +58,28 @@ describe('Grid', () => {
     ]).toHash());
   });
 
+  it('does not captures empty cells (0)', () => {
+    const grid = new Grid([
+      [1, 0, 0],
+      [6, 1, 6],
+      [6, 6, 6],
+    ]);
+    const possibleGrids = grid.getPossibleGrids();
+    expect(possibleGrids).toHaveLength(2);
+    expect(possibleGrids.map(g => g.toHash())).toEqual([
+      new Grid([
+        [0, 2, 0],
+        [6, 0, 6],
+        [6, 6, 6],
+      ]).toHash(),
+      new Grid([
+        [1, 0, 1],
+        [6, 1, 6],
+        [6, 6, 6],
+      ]).toHash(),
+    ]);
+  });
+
   it('gets all possible captures if many allowed', () => {
     const grid = new Grid([
       [6, 1, 6],

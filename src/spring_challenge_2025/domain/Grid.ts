@@ -69,7 +69,7 @@ export class Grid {
   private getPossibleCombinations(neighbors: Position[]) {
     return neighbors.reduce<Move[]>((acc, neighbor, currentIndex) => {
       const value = this.cells[neighbor.x][neighbor.y];
-      if(currentIndex === neighbors.length - 1 || value === 6) {
+      if(currentIndex === neighbors.length - 1 || value === 6 || value === 0) {
         return acc;
       }
       const nextNeighbors = neighbors.slice(currentIndex + 1);
@@ -87,7 +87,7 @@ export class Grid {
     for (let i = 0; i < positions.length; i++) {
       const current = positions[i];
       const value = this.cells[current.x][current.y];
-      if (value === 6) {
+      if (value === 6 || value === 0) {
         continue;
       }
       const nextPositions = positions.slice(i + 1);

@@ -21,6 +21,10 @@ export class GameInformationGateway {
         cells[i][j] = parseInt(inputs[j]);
       }
     }
+    console.error({
+      maxDepth: depth,
+      grid: new Grid(cells).toHash(),
+    });
     return {
       maxDepth: depth,
       grid: new Grid(cells),

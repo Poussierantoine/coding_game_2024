@@ -5,8 +5,10 @@
   "main": "src/winter_challenge_2024/main.ts",
   "scripts": {
     "test": "jest",
+    "build": "pnpm run build:spring-challenge",
     "build-winter-challenge": "chmod +x src/winter_challenge_2024/build.sh && ./build.sh",
     "build:mars": "esbuild src/mars_lander/index.ts --bundle --outfile=src/mars_lander/out.js && cat src/mars_lander/out.js | pbcopy",
+    "build:spring-challenge": "esbuild src/spring_challenge_2025/main.ts --bundle --outfile=src/spring_challenge_2025/out.js && cat src/spring_challenge_2025/out.js | pbcopy",
     "copy-build": "pnpm build && cat ./dist/main.ts | pbcopy"
   },
   "keywords": [],

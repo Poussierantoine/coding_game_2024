@@ -1,16 +1,21 @@
 import {GameInformationGateway} from '../infrastructure/GameInformationGateway';
 import {Graph} from '../domain/Graph';
+import {Grid} from '../domain/Grid';
 
-export class GetGameGraphService {
+type GraphProvider<T extends Graph = Graph> = (grid: Grid, maxDepth: number) => T;
 
+const productionGraphProvider: GraphProvider<Graph> = (grid: Grid, maxDepth: number) => {
+  return new Graph(grid, maxDepth);
+};
+
+export class GetGameGraphService<T extends Graph> {
   constructor(
     private readonly gameInformationGateway: GameInformationGateway,
+    private readonly graphProvider: GraphProvider<T> = productionGraphProvider as GraphProvider<T>,
   ) {}
 
-
-  execute(){
-    const {maxDepth, grid} = this.gameInformationGateway.getGameInformation();
-    const graph = new Graph(grid, maxDepth);
-    return graph.endingGridsHashs;
+  execute(): T {
+    const { maxDepth, grid } = this.gameInformationGateway.getGameInformation();
+    return this.graphProvider(grid, maxDepth);
   }
 }
