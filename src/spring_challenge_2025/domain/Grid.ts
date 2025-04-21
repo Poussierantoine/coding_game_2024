@@ -114,4 +114,16 @@ export class Grid {
     newCells[cellToPlay.x][cellToPlay.y] = move.sum;
     return new Grid(newCells);
   }
+
+  static fromHash(hash: string) {
+    const cells =  hash.split('')
+      .reduce((acc, value, index) => {
+        if (index % 6 === 0) {
+          acc.push([]);
+        }
+        acc[acc.length - 1].push(parseInt(value));
+        return acc;
+      }, [] as number[][]);
+    return new Grid(cells);
+  }
 }

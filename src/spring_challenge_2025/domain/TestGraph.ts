@@ -1,17 +1,33 @@
-import {Grid} from './Grid';
-import {Graph} from './Graph';
+import {Graph, Tree} from './Graph';
 
 
 export class TestGraph extends Graph {
-  constructor(grid: Grid, maxDepth: number){
-    super(grid, maxDepth);
+  constructor(){
+    super();
   }
 
-  getProcessedGridTrees() {
-    return this.processedGridTrees;
+  overrideProcessedGridTrees(
+    processedGridTrees: Record<string, Tree>,
+  ) {
+    this.processedGridTrees.clear();
+    for (const [hash, { children, leavesIfFullyProcessed, depth }] of Object.entries(processedGridTrees)) {
+      this.processedGridTrees.set(hash, {
+        children,
+        leavesIfFullyProcessed,
+        depth,
+      });
+    }
   }
 
-  overrideEndingGridHashs(endingGridsHashs: string[]) {
-    this.endingGridsHashsArray.splice(0, this.endingGridsHashsArray.length, ...endingGridsHashs);
+  getProcessedGridTreesAsRecord() {
+    const record = {} as Record<string, Tree>;
+    for (const [hash, tree] of this.processedGridTrees.entries()) {
+      record[hash] = tree;
+    }
+    return record;
+  }
+
+  clear() {
+    this.processedGridTrees.clear();
   }
 }

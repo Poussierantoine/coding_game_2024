@@ -12,6 +12,14 @@ describe('Grid', () => {
     });
   });
 
+  describe('fromHash', () => {
+    it('create the grid', () => {
+      const hash = '123456789';
+      const grid = Grid.fromHash(hash);
+      expect(grid.toHash()).toEqual(hash);
+    });
+  });
+
   describe('getPossibleGrids', () => {
     it('return an empty array if no possible grid', () => {
       const grid = new Grid([
