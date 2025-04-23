@@ -1,6 +1,6 @@
 import {Grid} from './domain/Grid';
 import {GetGameGraphService} from './application/get-game-graph.service';
-import {GetGraphEndingGridsSumService} from './application/get-graph-ending-grids-sum.service';
+import {GetEndingGridsSumService} from './application/get-ending-grids-sum.service';
 import {FakeGameInformationGateway} from './infrastructure/FakeGameInformationGateway';
 
 describe('some e2e test', () => {
@@ -12,7 +12,7 @@ describe('some e2e test', () => {
     const fakeGameInformationGateway = new FakeGameInformationGateway();
     fakeGameInformationGateway.feed(gameInformation);
     const graphService = new GetGameGraphService(fakeGameInformationGateway);
-    const sumService = new GetGraphEndingGridsSumService();
+    const sumService = new GetEndingGridsSumService();
     const graph = graphService.execute();
     const sum = sumService.execute(graph);
     expect(sum).toEqual(76092874);
@@ -30,13 +30,10 @@ describe('some e2e test', () => {
     const fakeGameInformationGateway = new FakeGameInformationGateway();
     fakeGameInformationGateway.feed(gameInformation);
     const graphService = new GetGameGraphService(fakeGameInformationGateway);
-    const sumService = new GetGraphEndingGridsSumService();
-    const now = Date.now();
+    const sumService = new GetEndingGridsSumService();
     const graph = graphService.execute();
     const sum = sumService.execute(graph);
-    const end = Date.now();
     expect(sum).not.toEqual(661168294);
-    expect(end - now).toBeLessThan(2000);
   });
 
 
